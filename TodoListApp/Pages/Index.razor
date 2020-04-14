@@ -1,0 +1,39 @@
+﻿@page "/"
+@using TodoListApp.Models
+
+<h2>Tasks</h2>
+<hr />
+<input type="text" name="taskTitle" @bind-value="@taskTitle" @bind-value:event="oninput"/>
+<button class="btn btn-primary" @onclick="AddTask">Add task</button>
+<br />
+<br />
+<h4>List:</h4>
+@foreach (var task in tasks)
+{
+    <h6>@task</h6>
+    <button class="btn btn-sm btn-danger" @onclick="@(e => DeleteTask(task))">Delete task</button>
+    <hr />
+}
+
+@code{
+    string taskTitle { get; set; } = string.Empty;
+    bool aceitarPropaganda { get; set; } = false;
+    string carroFavorito { get; set; } = "BMW";
+    List<string> tasks { get; set; } = new List<string> { };
+
+    private void AddTask()
+    {
+        tasks.Add(taskTitle);
+        ClearInput();
+    }
+
+    private void DeleteTask(string taskToDelete)
+    {
+        tasks.Remove(taskToDelete);
+    }
+
+    private void ClearInput()
+    {
+        taskTitle = string.Empty;
+    }
+}
